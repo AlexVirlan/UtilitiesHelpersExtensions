@@ -149,6 +149,22 @@ namespace AlexVirlan.Utilities
         public static string ToHex(this Color c) => c.IsEmpty ? "" : $"#{c.R:X2}{c.G:X2}{c.B:X2}";
 
         public static string ToRGB(this Color c) => c.IsEmpty ? "" : $"RGB({c.R},{c.G},{c.B})";
+
+        public static Color Invert(this Color color)
+        {
+            Color invertedColor = Color.FromArgb(color.ToArgb() ^ 0xffffff);
+
+            if (invertedColor.R > 110 && invertedColor.R < 150 &&
+                invertedColor.G > 110 && invertedColor.G < 150 &&
+                invertedColor.B > 110 && invertedColor.B < 150)
+            {
+                int avg = (invertedColor.R + invertedColor.G + invertedColor.B) / 3;
+                avg = avg > 128 ? 200 : 60;
+                invertedColor = Color.FromArgb(avg, avg, avg);
+            }
+
+            return invertedColor;
+        }
         #endregion
 
         #region Others
