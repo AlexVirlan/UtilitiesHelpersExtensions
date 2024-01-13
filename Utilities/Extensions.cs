@@ -136,6 +136,28 @@ namespace AlexVirlan.Utilities
         }
         #endregion
 
+        #region Long
+        public static string ToPrettySize(this long value, int decimalPlaces = 2)
+        {
+            string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+            if (decimalPlaces < 0) { decimalPlaces = 0; }
+            if (value == 0) { return string.Format($"{{0:n{decimalPlaces}}} bytes", 0); }
+            if (value < 0) { return "-" + ToPrettySize(-value, decimalPlaces); }
+
+            int mag = (int)Math.Log(value, 1024);
+            decimal adjustedSize = (decimal)value / (1L << (mag * 10));
+
+            if (Math.Round(adjustedSize, decimalPlaces) >= 1000)
+            {
+                mag += 1;
+                adjustedSize /= 1024;
+            }
+
+            return string.Format($"{{0:n{decimalPlaces}}} {{1}}", adjustedSize, SizeSuffixes[mag]);
+        }
+        #endregion
+
         #region Object
         public static string ToStringSafely(this object? @object)
         {
