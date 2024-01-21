@@ -4,3 +4,6 @@ Utilities: Helpers & Extensions - a collection of classes that can help you in a
 Some are developed by me, others are gathered from around the web (and in some cases modified/improved a bit).
 
 Use them as you wish, but if any of them help you, please don't forget to give this repo a humble star. :D
+
+To-do: 
+- a simple console app to demonstrate use cases. 
