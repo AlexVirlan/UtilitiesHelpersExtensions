@@ -121,6 +121,13 @@ namespace AlexVirlan.Utilities
         }
         #endregion
 
+        #region Int
+        public static bool IsSuccessStatusCode(this int statusCode)
+        {
+            return (statusCode >= 200) && (statusCode <= 299);
+        }
+        #endregion
+
         #region Double
         public static string ToStringSafely(this double? value, string valueIfNull = "")
         {
