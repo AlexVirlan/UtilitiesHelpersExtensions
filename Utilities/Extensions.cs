@@ -95,6 +95,14 @@ namespace AlexVirlan.Utilities
         }
         #endregion
 
+        #region Char
+        public static bool ToBool(this char @char)
+        {
+            if (bool.TryParse(@char.ToString(), out bool result)) { return result; }
+            return false;
+        }
+        #endregion
+
         #region TreeView
         public static void CheckTreeNodeCollection(this TreeNodeCollection treeNodeCollection, bool isChecked = true)
         {
@@ -170,6 +178,12 @@ namespace AlexVirlan.Utilities
         public static bool IsSuccessStatusCode(this int statusCode)
         {
             return (statusCode >= 200) && (statusCode <= 299);
+        }
+
+        public static bool ToBool(this int @int)
+        {
+            if (bool.TryParse(@int.ToString(), out bool result)) { return result; }
+            return false;
         }
         #endregion
 
