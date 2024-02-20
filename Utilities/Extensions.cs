@@ -48,6 +48,51 @@ namespace AlexVirlan.Utilities
                     return new StringBuilder(str.Length * times).AppendJoin(str, new string[times + 1]).ToString();
             }
         }
+
+        public static string Reverse(this string str, int pairSize = 1)
+        {
+            if (string.IsNullOrEmpty(str)) { return str; }
+            if (pairSize < 1) { pairSize = 1; }
+            if (pairSize > str.Length) { pairSize = str.Length; }
+
+            int n = str.Length / pairSize + (str.Length % pairSize == 0 ? 0 : 1);
+            return string.Concat(
+                Enumerable.Range(0, n)
+                .Select(i => i < n - 1 ? str.Substring(i * pairSize, pairSize) : str.Substring(i * pairSize))
+                .Reverse()
+            );
+        }
+
+        public static string RemoveSpecialCharacters(this string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
+        public static int HexToDecimal(this string hexStr)
+        {
+            try { return Convert.ToInt32(hexStr, 16); }
+            catch (Exception) { return 0; }
+        }
+
+        public static string HexToBinary(this string hexStr)
+        {
+            int intValue = Convert.ToInt32(hexStr, 16);
+            return Convert.ToString(intValue, 2).PadLeft(hexStr.Length * 4, '0');
+        }
+
+        public static bool ToBool(this string str)
+        {
+            if (bool.TryParse(str, out bool result)) { return result; }
+            return false;
+        }
         #endregion
 
         #region TreeView
