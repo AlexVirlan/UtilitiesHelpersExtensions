@@ -88,15 +88,6 @@ namespace AlexVirlan.Utilities
             return Convert.ToString(intValue, 2).PadLeft(hexStr.Length * 4, '0');
         }
 
-        public static byte[] HexToBytes(this string hexStr)
-        {
-            int hexLength = hexStr.Length;
-            byte[] bytes = new byte[hexLength / 2];
-            for (int i = 0; i < hexLength; i += 2)
-            { bytes[i / 2] = Convert.ToByte(hexStr.Substring(i, 2), 16); }
-            return bytes;
-        }
-
         public static bool ToBool(this string str)
         {
             if (bool.TryParse(str, out bool result)) { return result; }
