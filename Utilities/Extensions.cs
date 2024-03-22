@@ -181,6 +181,8 @@ namespace AlexVirlan.Utilities
             if (b is null) { return string.IsNullOrEmpty(valueIfNull) ? "" : valueIfNull; }
             return b.ToString();
         }
+
+        public static bool Invert(ref this bool @bool) => @bool = !@bool;
         #endregion
 
         #region Int
