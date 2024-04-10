@@ -97,18 +97,26 @@ namespace AlexVirlan.Utilities
             return bytes;
         }
 
-        public static bool ToBool(this string str)
+        public static bool ToBool(this string str, bool strict = true)
         {
-            if (bool.TryParse(str, out bool result)) { return result; }
-            return false;
+            if (string.IsNullOrEmpty(str)) { return false; }
+            string[] falseValues = { "false", "0", "no", "off" };
+            if (falseValues.Contains(str, StringComparer.OrdinalIgnoreCase)) { return false; }
+            if (strict)
+            {
+                string[] trueValues = { "true", "1", "yes", "on" };
+                if (trueValues.Contains(str, StringComparer.OrdinalIgnoreCase))
+                { return true; }
+                else { return false; }
+            }
+            else { return true; }
         }
         #endregion
 
         #region Char
-        public static bool ToBool(this char @char)
+        public static bool ToBool(this char @char, bool strict = true)
         {
-            if (bool.TryParse(@char.ToString(), out bool result)) { return result; }
-            return false;
+            return @char.ToString().ToBool(strict);
         }
         #endregion
 
@@ -191,10 +199,9 @@ namespace AlexVirlan.Utilities
             return (statusCode >= 200) && (statusCode <= 299);
         }
 
-        public static bool ToBool(this int @int)
+        public static bool ToBool(this int @int, bool strict = true)
         {
-            if (bool.TryParse(@int.ToString(), out bool result)) { return result; }
-            return false;
+            return @int.ToString().ToBool(strict);
         }
         #endregion
 
