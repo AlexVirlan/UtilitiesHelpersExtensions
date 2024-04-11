@@ -111,6 +111,15 @@ namespace AlexVirlan.Utilities
             }
             else { return true; }
         }
+
+        public static string InsertHexLength(this string str, int atIndex = 0, string hexFormat = "X")
+        {
+            if (string.IsNullOrEmpty(str)) { return str; }
+            if (atIndex < 0 || atIndex > str.Length) { atIndex = str.Length; }
+
+            string hexLength = (atIndex == str.Length) ? str.Length.ToString(hexFormat) : str.Substring(atIndex).Length.ToString(hexFormat);
+            return str.Insert(atIndex, hexLength);
+        }
         #endregion
 
         #region Char
