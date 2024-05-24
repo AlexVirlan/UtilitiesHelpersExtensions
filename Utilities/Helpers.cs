@@ -24,6 +24,35 @@ namespace AlexVirlan.Utilities
         private static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
         #endregion
 
+        public static string GetCopyPath(string path)
+        {
+            if (string.IsNullOrEmpty(path)) { return path; }
+
+            string? filePathOnly = Path.GetDirectoryName(path);
+            if (filePathOnly is null) { return path; }
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+            string fileExtension = Path.GetExtension(path);
+
+            int index = 0;
+            string result = string.Empty;
+            while (File.Exists(path))
+            {
+                index++;
+                result = Path.Combine(filePathOnly, $"{fileNameWithoutExtension} ({index}){fileExtension}");
+            }
+            return result;
+        }
+
+        public static FunctionResponse SetStartup(string appName, bool active = true, string args = "")
+        {
+            if (appName.INOE()) { return new FunctionResponse(error: true, message: "The 'appName' parameter is empty."); }
+            RegistryKey? rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (rk is null) { return new FunctionResponse(error: true, message: "The registry key is null."); }
+            if (active) { rk.SetValue(appName, $@"""{Application.ExecutablePath}""" + (args.INOE() ? "" : $" {args}")); }
+            else { rk.DeleteValue(appName, throwOnMissingValue: false); }
+            return new FunctionResponse(error: false);
+        }
+
         public static Color? GetColor(string colorName, Color? fallbackColor = null)
         {
             Color color = Color.FromName(colorName);
